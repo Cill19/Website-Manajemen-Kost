@@ -26,7 +26,7 @@
                             <img src="{{ asset('storage/' . $category->image) }}" class="w-full h-full object-cover" alt="thumbnail">
                         </div>
                         <h3 class="font-semibold">{{$category->name}}</h3>
-                        <p class="text-sm text-gray-500">1,304 Kos</p>
+                        <p class="text-sm text-gray-500">{{$category->boardingHouses->count()}} Kos</p>
                     </div>
                 </a>
             </div>
@@ -73,7 +73,7 @@
                                         <p class="text-sm text-ngekos-grey">tersedia</p>
                                     </div>
                                     <hr class="border-[#F1F2F6]">
-                                    <p class="font-semibold text-lg text-ngekos-orange">Rp. {{$boardingHouse->price}}<span
+                                    <p class="font-semibold text-lg text-ngekos-orange">Rp. {{number_format($boardingHouse->price, 0,',','.')}}<span
                                             class="text-sm text-ngekos-grey font-normal">/bulan</span></p>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="flex flex-col gap-[2px]">
                             <h3 class="font-semibold">{{$city->name}}</h3>
-                            <p class="text-sm text-ngekos-grey">1,304 Kos</p>
+                            <p class="text-sm text-ngekos-grey">{{$category->boardingHouses->count()}} Kos</p>
                         </div>
                     </div>
                 </a>
@@ -149,7 +149,7 @@
                                 <p class="text-sm text-ngekos-grey"></p>
                             </div>
                             <hr class="border-[#F1F2F6]">
-                            <p class="font-semibold text-lg text-ngekos-orange">Rp {{$boardingHouse->price}}<span
+                            <p class="font-semibold text-lg text-ngekos-orange">Rp. {{number_format($boardingHouse->price, 0,',','.')}}<span
                                     class="text-sm text-ngekos-grey font-normal">/bulan</span></p>
                         </div>
                     </div>
