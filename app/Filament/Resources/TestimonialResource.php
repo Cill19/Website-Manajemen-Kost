@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestimonialResource\Pages;
-use App\Filament\Resources\TestimonialResource\RelationManagers;
 use App\Models\Testimonial;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TestimonialResource extends Resource
 {
@@ -32,7 +29,7 @@ class TestimonialResource extends Resource
                     ->columnSpan(2),
 
                 Forms\Components\Select::make('boarding_house_id')
-                    ->relationshipTo('boardingHouse', 'name')
+                    ->relationship('boardingHouse', 'name') // ✅ Pastikan ini tetap ada
                     ->required()
                     ->columnSpan(2),
 
@@ -40,11 +37,8 @@ class TestimonialResource extends Resource
                     ->required()
                     ->columnSpan(2),
 
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-
                 Forms\Components\TextInput::make('rating')
-                    -> numeric()
+                    ->numeric()
                     ->minValue(1)
                     ->maxValue(5)
                     ->required(),
@@ -56,15 +50,14 @@ class TestimonialResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('photo'),
-                Tables\Columns\TextColumn::make('boarding_house_name'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('content'),
-                Tables\Columns\ImageColumn::make('rating'),
-
+                Tables\Columns\TextColumn::make('boardingHouse.name') // ✅ Tampilkan nama boarding house, bukan name yang tidak ada
+                    ->label('Boarding House'),
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Testimonial'),
+                Tables\Columns\TextColumn::make('rating')
+                    ->label('Rating'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -79,9 +72,7 @@ class TestimonialResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
